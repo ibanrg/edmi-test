@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdmiTest.Frontend", "EdmiTest.Frontend\EdmiTest.Frontend.csproj", "{BB469C13-48F3-4221-8CCD-A911822B90D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdmiTest.Data", "EdmiTest.Data\EdmiTest.Data.csproj", "{F2B47AAE-39BD-433B-BB36-F4AC8663692A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdmiTest.Services", "EdmiTest.Services\EdmiTest.Services.csproj", "{77ADFAD3-AD84-4B29-ACBF-4BA7AF504645}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{BB469C13-48F3-4221-8CCD-A911822B90D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB469C13-48F3-4221-8CCD-A911822B90D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB469C13-48F3-4221-8CCD-A911822B90D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B47AAE-39BD-433B-BB36-F4AC8663692A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B47AAE-39BD-433B-BB36-F4AC8663692A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B47AAE-39BD-433B-BB36-F4AC8663692A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B47AAE-39BD-433B-BB36-F4AC8663692A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77ADFAD3-AD84-4B29-ACBF-4BA7AF504645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77ADFAD3-AD84-4B29-ACBF-4BA7AF504645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77ADFAD3-AD84-4B29-ACBF-4BA7AF504645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77ADFAD3-AD84-4B29-ACBF-4BA7AF504645}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

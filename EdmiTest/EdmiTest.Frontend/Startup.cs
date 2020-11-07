@@ -1,10 +1,14 @@
+using EdmiTest.Data.Contexts;
+using EdmiTest.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace EdmiTest.Frontend
 {
@@ -15,12 +19,21 @@ namespace EdmiTest.Frontend
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public static string ActualEnvironment { get { return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"; } }
+        public IConfiguration Configuration { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile($"appsettings.{ActualEnvironment}.json", false, true).
+                Build();
+
+            services.AddDbContext<EdmiDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EdmiDb")));
+
+            services.AddCustomServices().AddCustomDataServices();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
