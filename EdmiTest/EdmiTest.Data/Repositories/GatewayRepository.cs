@@ -1,11 +1,8 @@
 ﻿using EdmiTest.Data.Contexts;
 using EdmiTest.Data.Interfaces;
 using EdmiTest.Data.Models;
-using EdmiTest.Data.Models.Responses;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EdmiTest.Data.Repositories
@@ -22,7 +19,13 @@ namespace EdmiTest.Data.Repositories
         public async Task<bool> Add(Gateway gateway)
         {
             await _db.Gateways.AddAsync(gateway);
+            await _db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<bool> Exists(string serialNumber)
+        {
+            return await _db.Gateways.AnyAsync(x => x.SerialNumber == serialNumber);
         }
 
         public async Task<List<Gateway>> GetAll()

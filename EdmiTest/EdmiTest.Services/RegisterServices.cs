@@ -1,4 +1,5 @@
-﻿using EdmiTest.Services.Interfaces;
+﻿using EdmiTest.Data.Models;
+using EdmiTest.Services.Interfaces;
 using EdmiTest.Services.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,6 +12,7 @@ namespace EdmiTest.Services
     {
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
+            services.AddScoped<IDeviceService<Device>, DeviceService>();
             services.AddScoped<IElectricMeterService, ElectricMeterService>();
             services.AddScoped<IWaterMeterService, WaterMeterService>();
             services.AddScoped<IGatewayService, GatewayService>();

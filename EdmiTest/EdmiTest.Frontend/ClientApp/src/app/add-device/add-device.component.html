@@ -1,0 +1,44 @@
+<h1>Add Device</h1>
+<form [formGroup]="deviceForm" (ngSubmit)="onSubmit(deviceForm.value)">
+
+  <div class="form-group">
+    <label for="type" class="form-group">Device Type</label>
+    <select id="type"  formControlName="type" class="form-control" (change)="onChangeType($event.target.value)">
+      <option value="ElectricMeter">Electric Meter</option>
+      <option value="WaterMeter">Water Meter</option>
+      <option value="Gateway">Gateway</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="serialNumber" class="form-group">Serial Number</label>
+    <input id="serialNumber" type="text" formControlName="serialNumber" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label for="firmwareVersion">Firmware Version</label>
+    <input id="firmwareVersion" type="text" formControlName="firmwareVersion" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label for="state">State</label>
+    <select id="state" formControlName="state" class="form-control">
+      <option value="0">Inactive</option>
+      <option value="1">Active</option>
+      <option value="2">Repairing</option>
+    </select>
+  </div>
+
+  <div class="form-group" *ngIf="gatewayFieldsEnabled">
+    <label for="ip">IP</label>
+    <input id="ip" type="text" formControlName="ip" class="form-control">
+  </div>
+
+  <div class="form-group" *ngIf="gatewayFieldsEnabled">
+    <label for="port">Port</label>
+    <input id="port" type="text" formControlName="port" class="form-control">
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="!deviceForm.valid">Add</button>
+
+</form>

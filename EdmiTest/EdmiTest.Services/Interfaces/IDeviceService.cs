@@ -11,5 +11,6 @@ namespace EdmiTest.Services.Interfaces
     {
         Task<AddDeviceResponse> Add(Device device);
         Task<List<Device>> GetAll();
+        Task<bool> Exists(string serialNumber);
     }
 }

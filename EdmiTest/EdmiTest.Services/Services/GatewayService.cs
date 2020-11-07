@@ -31,6 +31,11 @@ namespace EdmiTest.Services.Services
             }
         }
 
+        public async Task<bool> Exists(string serialNumber)
+        {
+            return await _gatewayRepository.Exists(serialNumber);
+        }
+
         public async Task<List<Gateway>> GetAll()
         {
             return await _gatewayRepository.GetAll();

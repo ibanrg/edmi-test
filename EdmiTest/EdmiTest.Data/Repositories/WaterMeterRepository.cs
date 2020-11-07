@@ -19,7 +19,13 @@ namespace EdmiTest.Data.Repositories
         public async Task<bool> Add(WaterMeter WaterMeter)
         {
             await _db.WaterMeters.AddAsync(WaterMeter);
+            await _db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<bool> Exists(string serialNumber)
+        {
+            return await _db.WaterMeters.AnyAsync(x => x.SerialNumber == serialNumber);
         }
 
         public async Task<List<WaterMeter>> GetAll()

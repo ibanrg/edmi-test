@@ -31,6 +31,11 @@ namespace EdmiTest.Services.Services
             }
         }
 
+        public async Task<bool> Exists(string serialNumber)
+        {
+            return await _waterMeterRepository.Exists(serialNumber);
+        }
+
         public async Task<List<WaterMeter>> GetAll()
         {
             return await _waterMeterRepository.GetAll();
