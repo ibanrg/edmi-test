@@ -6,6 +6,8 @@
       <th>Serial Number</th>
       <th>Firmware Version</th>
       <th>State</th>
+      <th>IP</th>
+      <th>Port</th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +16,8 @@
       <td>{{ device.serialNumber }}</td>
       <td>{{ device.firmwareVersion }}</td>
       <td>{{ device.state == 0 ? 'Inactive' : device.state == 1 ? 'Active' : device.state == 2 ? 'Repairing' : '' }}</td>
+      <td>{{ device.ip }}</td>
+      <td>{{ device.port }}</td>
     </tr>
   </tbody>
 </table>

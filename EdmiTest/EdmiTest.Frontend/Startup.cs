@@ -22,7 +22,6 @@ namespace EdmiTest.Frontend
         public static string ActualEnvironment { get { return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"; } }
         public IConfiguration Configuration { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -35,14 +34,14 @@ namespace EdmiTest.Frontend
 
             services.AddCustomServices().AddCustomDataServices();
 
-            // In production, the Angular files will be served from this directory
+            services.AddSwaggerGen();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -52,9 +51,14 @@ namespace EdmiTest.Frontend
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "EdmiTest API");
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -65,13 +69,13 @@ namespace EdmiTest.Frontend
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Home", action = "Index" });
             });
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())

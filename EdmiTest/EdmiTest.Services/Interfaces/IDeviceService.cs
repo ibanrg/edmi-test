@@ -9,8 +9,9 @@ namespace EdmiTest.Services.Interfaces
 {
     public interface IDeviceService<Device>
     {
-        Task<AddDeviceResponse> Add(Device device);
+        Task<BaseResponse> Add(Device device);
         Task<List<Device>> GetAll();
-        Task<bool> Exists(string serialNumber);
+        Task<BaseResponse> Exists(string serialNumber);
+        BaseResponse Validate(Device device);
     }
 }

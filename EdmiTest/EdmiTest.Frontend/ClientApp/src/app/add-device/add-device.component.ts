@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Device, BaseResponse } from '../../models/models';
 
 @Component({
   selector: 'app-add-device',
@@ -21,12 +22,16 @@ export class AddDeviceComponent {
         Validators.minLength(4),
         Validators.maxLength(50),
       ]),
-      firmwareVersion: new FormControl(this.device.firmwareVersion),
+      firmwareVersion: new FormControl(this.device.firmwareVersion, [
+        Validators.pattern('(\[0-9]+)\.(\[0-9]+)'),
+        Validators.maxLength(20)
+      ]),
       state: new FormControl(this.device.state),
       ip: new FormControl(this.device.ip, [
         Validators.pattern('(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)')
       ]),
       port: new FormControl(this.device.port, [
+        Validators.min(0),
         Validators.max(65535),
       ]),
     });
@@ -45,19 +50,13 @@ export class AddDeviceComponent {
   }
 
   onSubmit(deviceData) {
-    this.http.post<Device>(this.baseUrl + 'api/' + deviceData.type, deviceData).subscribe(result => {
+    this.http.post<BaseResponse>(this.baseUrl + 'api/' + deviceData.type, deviceData).subscribe(result => {
       debugger;
       alert('Device added!')
       this.deviceForm.reset();
-    }, error => { debugger; alert('Error!'); });
+    }, result => {
+      debugger;
+      alert('Something went wrong:\n' + result.error.errorMessages.join('\n'));
+    });
   }
-}
-
-class Device {
-  type: string;
-  serialNumber: string;
-  firmwareVersion: string;
-  state: number;
-  ip: string;
-  port: number;
 }

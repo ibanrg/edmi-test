@@ -31,12 +31,26 @@ namespace EdmiTest.Frontend.Controllers
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] WaterMeter waterMeter)
         {
-            if (await _deviceService.Exists(waterMeter.SerialNumber))
+            BaseResponse result;
+            if (waterMeter == null)
             {
-                return BadRequest(new AddDeviceResponse { Valid = false, ErrorMessage = "A device with that Serial Number already exists." });
+                return BadRequest();
             }
-            await _waterMeterService.Add(waterMeter);
-            return Ok(new AddDeviceResponse());
+
+            result = await _deviceService.Exists(waterMeter.SerialNumber);
+            if (!result.Valid)
+            {
+                return BadRequest(result);
+            }
+
+            result = _waterMeterService.Validate(waterMeter);
+            if (!result.Valid)
+            {
+                return BadRequest(result);
+            }
+
+            result = await _waterMeterService.Add(waterMeter);
+            return Ok(result);
         }
     }
 }

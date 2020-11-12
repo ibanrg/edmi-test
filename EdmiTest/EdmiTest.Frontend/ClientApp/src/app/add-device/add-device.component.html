@@ -3,7 +3,7 @@
 
   <div class="form-group">
     <label for="type" class="form-group">Device Type</label>
-    <select id="type"  formControlName="type" class="form-control" (change)="onChangeType($event.target.value)">
+    <select id="type" formControlName="type" class="form-control" (change)="onChangeType($event.target.value)">
       <option value="ElectricMeter">Electric Meter</option>
       <option value="WaterMeter">Water Meter</option>
       <option value="Gateway">Gateway</option>
@@ -13,11 +13,30 @@
   <div class="form-group">
     <label for="serialNumber" class="form-group">Serial Number</label>
     <input id="serialNumber" type="text" formControlName="serialNumber" class="form-control">
+    <div *ngIf="deviceForm.controls['serialNumber'].invalid && (deviceForm.controls['serialNumber'].dirty || deviceForm.controls['serialNumber'].touched)" class="alert validation-message">
+      <div *ngIf="deviceForm.controls['serialNumber'].errors.required">
+        Serial number is required
+      </div>
+      <div *ngIf="deviceForm.controls['serialNumber'].errors.minlength">
+        Serial number min length is 4
+      </div>
+      <div *ngIf="deviceForm.controls['serialNumber'].errors.maxlength">
+        Serial number max length is 50
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
     <label for="firmwareVersion">Firmware Version</label>
     <input id="firmwareVersion" type="text" formControlName="firmwareVersion" class="form-control">
+    <div *ngIf="deviceForm.controls['firmwareVersion'].invalid && (deviceForm.controls['firmwareVersion'].dirty || deviceForm.controls['firmwareVersion'].touched)" class="alert validation-message">
+      <div *ngIf="deviceForm.controls['firmwareVersion'].errors.pattern">
+        Firmware Version format not valid (xx.xx)
+      </div>
+      <div *ngIf="deviceForm.controls['firmwareVersion'].errors.maxlength">
+        Firmware Version max length is 20
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
@@ -32,11 +51,26 @@
   <div class="form-group" *ngIf="gatewayFieldsEnabled">
     <label for="ip">IP</label>
     <input id="ip" type="text" formControlName="ip" class="form-control">
+    <div *ngIf="deviceForm.controls['ip'].invalid && (deviceForm.controls['ip'].dirty || deviceForm.controls['ip'].touched)" class="alert validation-message">
+      <div *ngIf="deviceForm.controls['ip'].errors.pattern">
+        IP format not valid (xxx.xxx.xxx.xxx)
+      </div>
+    </div>
   </div>
 
   <div class="form-group" *ngIf="gatewayFieldsEnabled">
     <label for="port">Port</label>
     <input id="port" type="text" formControlName="port" class="form-control">
+    <div *ngIf="deviceForm.controls['port'].invalid && (deviceForm.controls['port'].dirty || deviceForm.controls['port'].touched)" class="alert validation-message">
+      <div *ngIf="deviceForm.controls['port'].errors.min">
+        Port value must be greater than 0
+      </div>
+    </div>
+    <div *ngIf="deviceForm.controls['port'].invalid && (deviceForm.controls['port'].dirty || deviceForm.controls['port'].touched)" class="alert validation-message">
+      <div *ngIf="deviceForm.controls['port'].errors.max">
+        Port value must be lower than 65535
+      </div>
+    </div>
   </div>
 
   <button type="submit" class="btn btn-primary" [disabled]="!deviceForm.valid">Add</button>

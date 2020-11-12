@@ -21,17 +21,32 @@ namespace EdmiTest.Services.Services
             _gatewayService = gatewayService;
         }
 
-        public Task<AddDeviceResponse> Add(Device device)
+        public Task<BaseResponse> Add(Device device)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> Exists(string serialNumber)
+        public async Task<BaseResponse> Exists(string serialNumber)
         {
-            return await _electricMeterService.Exists(serialNumber) || await _waterMeterService.Exists(serialNumber) || await _gatewayService.Exists(serialNumber);
+            BaseResponse result;
+            result = await _electricMeterService.Exists(serialNumber);
+            if (result.Valid)
+            {
+                result = await _waterMeterService.Exists(serialNumber);
+                if (result.Valid)
+                {
+                    result = await _gatewayService.Exists(serialNumber);
+                }
+            }
+            return result;
         }
 
         public Task<List<Device>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public BaseResponse Validate(Device device)
         {
             throw new NotImplementedException();
         }

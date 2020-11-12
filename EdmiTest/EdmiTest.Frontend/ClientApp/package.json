@@ -1,5 +1,5 @@
 {
-  "name": "EdmiTest.Frontend",
+  "name": "edmitest",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -24,7 +24,7 @@
     "@angular/router": "6.1.10",
     "@nguniversal/module-map-ngfactory-loader": "6.0.0",
     "core-js": "^2.5.4",
-    "rxjs": "^6.0.0",
+    "rxjs": "6.3.3",
     "zone.js": "^0.8.26",
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.3.1",

@@ -31,12 +31,26 @@ namespace EdmiTest.Frontend.Controllers
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] Gateway gateway)
         {
-            if (await _deviceService.Exists(gateway.SerialNumber))
+            BaseResponse result;
+            if (gateway == null)
             {
-                return BadRequest(new AddDeviceResponse { Valid = false, ErrorMessage = "A device with that Serial Number already exists." });
+                return BadRequest();
             }
-            await _gatewayService.Add(gateway);
-            return Ok(new AddDeviceResponse());
+
+            result = await _deviceService.Exists(gateway.SerialNumber);
+            if (!result.Valid)
+            {
+                return BadRequest(result);
+            }
+
+            result = _gatewayService.Validate(gateway);
+            if (!result.Valid)
+            {
+                return BadRequest(result);
+            }
+
+            result = await _gatewayService.Add(gateway);
+            return Ok(result);
         }
     }
 }

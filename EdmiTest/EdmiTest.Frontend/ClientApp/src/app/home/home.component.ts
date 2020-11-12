@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Device } from '../../models/models';
 
 @Component({
   selector: 'app-home',
@@ -16,23 +17,14 @@ export class HomeComponent {
   loadData() {
     this.http.get<Device[]>(this.baseUrl + 'api/ElectricMeter').subscribe(result => {
       this.devices = this.devices.concat(result.map(x => { return { type: "Electric Meter", ...x } }));
-    }, error => console.error(error));
+    }, result => console.error(result));
 
     this.http.get<Device[]>(this.baseUrl + 'api/WaterMeter').subscribe(result => {
       this.devices = this.devices.concat(result.map(x => { return { type: "Water Meter", ...x } }));
-    }, error => console.error(error));
+    }, result => console.error(result));
 
     this.http.get<Device[]>(this.baseUrl + 'api/Gateway').subscribe(result => {
       this.devices = this.devices.concat(result.map(x => { return { type: "Gateway", ...x } }));
-    }, error => console.error(error));
+    }, result => console.error(result));
   }
-}
-
-interface Device {
-  type: string;
-  serialNumber: string;
-  firmwareVersion: string;
-  state: number;
-  ip: string;
-  port: number;
 }
